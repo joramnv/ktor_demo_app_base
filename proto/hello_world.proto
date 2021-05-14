@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package examples;
+
+option java_outer_classname = "ProtoModels";
+option java_package = "com.joram.examples";
+
+// User Code definitions
+service HelloWorld {
+  rpc Say (SayRequest) returns (SayResponse) {}
+  rpc WhoIs (WhoIsRequest) returns (WhoIsResponse) {}
+}
+
+message SayRequest {
+  string message = 1;
+}
+
+message SayResponse {
+  string timestamp = 1;
+}
+
+message WhoIsRequest {
+  string requestFrom = 1;
+}
+
+message WhoIsResponse {
+  string requestFrom = 1;
+  string responseFrom = 2;
+  string communicationMethod = 3;
+  string message = 4;
+}
