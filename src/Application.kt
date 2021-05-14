@@ -110,10 +110,21 @@ val APPLICATION_JSON = "application/json"
 
 fun launchGrpcServer(applicationConfig: ApplicationConfig) {
     GlobalScope.launch {
-        val grpcPort: Int = applicationConfig.property("grpc.deployment.port").getString().toInt()
-        val appName: String = applicationConfig.property("ktor.application.name").getString()
+        val grpcPort: Int = applicationConfig.getGrpcPort()
+        val appId: String = applicationConfig.getAppId()
+        val appName: String = getAppName(appId)
         val grpcService = GrpcService(grpcPort, appName)
         grpcService.start()
         grpcService.awaitTermination()
     }
 }
+
+fun ApplicationConfig.getGrpcPort(): Int =
+    this.property("grpc.deployment.port").getString().toInt()
+
+fun ApplicationConfig.getAppId(): String =
+    this.property("ktor.application.id").getString()
+
+fun getAppName(appId: String): String =
+    getSecret("app-name-$appId")
+        .fold({ "default-app-name" }, { it })
