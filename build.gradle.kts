@@ -5,18 +5,18 @@ import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
-val logback_version: String by project
-val ktor_version: String by project
-val kotlin_version: String by project
-val arrow_version: String by project
-val dapr_version: String by project
+val logbackVersion: String by project
+val ktorVersion: String by project
+val kotlinVersion: String by project
+val arrowVersion: String by project
+val daprVersion: String by project
 val grpcVersion: String by project
 val grpcKotlinVersion: String by project
 val protobufVersion: String by project
 
 plugins {
     kotlin("jvm")
-    id("com.google.protobuf") version "0.8.13"
+    id("com.google.protobuf") version "0.8.18"
     `idea`
 }
 
@@ -37,17 +37,19 @@ idea {
 
 dependencies {
     api(kotlin("stdlib-jdk8"))
-    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    api("io.ktor:ktor-server-netty:$ktor_version")
-    api("ch.qos.logback:logback-classic:$logback_version")
-    api("io.ktor:ktor-server-core:$ktor_version")
-    api("io.ktor:ktor-gson:$ktor_version")
-    api("io.arrow-kt:arrow-fx-coroutines:$arrow_version")
-    api("io.dapr:dapr-sdk:$dapr_version")
+    api("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    api("io.ktor:ktor-server-netty:$ktorVersion")
+    api("ch.qos.logback:logback-classic:$logbackVersion")
+    api("io.ktor:ktor-server-core:$ktorVersion")
+    api("io.ktor:ktor-gson:$ktorVersion")
+    api("io.arrow-kt:arrow-fx-coroutines:$arrowVersion")
+    api("io.dapr:dapr-sdk:$daprVersion")
     api("com.google.protobuf:protobuf-java-util:$protobufVersion")
     api("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
-    api("io.ktor:ktor-server-tests:$ktor_version")
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    api("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+    api("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    api("io.ktor:ktor-server-tests:$ktorVersion")
+    implementation("io.grpc:grpc-stub:$grpcVersion")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
@@ -67,7 +69,7 @@ tasks.withType<KotlinCompile> {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 protobuf {

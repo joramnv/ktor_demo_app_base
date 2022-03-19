@@ -60,7 +60,7 @@ suspend fun handleSuccessTextPlain(
         call.respondText(text, contentType = ContentType.Text.Plain)
     }
 
-suspend fun <A : Any> handleSuccess(
+suspend inline fun <reified A : Any> handleSuccess(
     call: ApplicationCall,
     a: A
 ): Either<Throwable, Unit> =
